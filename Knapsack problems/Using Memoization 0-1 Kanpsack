@@ -1,0 +1,37 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+int knapsack(int wt[],int val[],int n,int w,vector<vector<int>>& dp)
+{
+    if(n==0 or w==0)
+       return 0;
+       
+    if(dp[n][w]!=-1)
+       return dp[n][w];
+       
+    if(wt[n-1]<=w)
+       return dp[n][w]=max((val[n-1]+knapsack(wt,val,n-1,w-wt[n-1],dp)),knapsack(wt,val,n-1,w,dp));
+    else
+       return dp[n][w]=knapsack(wt,val,n-1,w,dp);
+}
+
+int main() {
+	// your code goes here
+	int n;
+	cin>>n;
+	int wt[n],val[n];
+	int w;
+	for(int i=0;i<n;i++)
+	   cin>>wt[i];
+	   
+	for(int i=0;i<n;i++)
+	   cin>>val[i];
+     
+	   cin>>w;
+	   
+    vector<vector<int>>dp(n+1,vector<int>(w+1,-1));
+            
+	int x=knapsack(wt,val,n,w,dp);
+	cout<<"Maximum profit is:"<<x<<endl;
+	return 0;
+}

@@ -1,0 +1,73 @@
+class Solution {
+public:
+    int solve(int k,int n,vector<vector<int>>&dp)
+    {
+        if(n==0 or n==1)
+            return n;
+        
+        if(k==1)
+            return n;
+        
+        if(dp[k][n]!=-1)
+            return dp[k][n];
+        
+        int mn=INT_MAX;
+        for(int i=1;i<=n;i++)
+        {
+            int temp=1+max(superEggDrop(k-1,i-1),superEggDrop(k,n-i));
+            mn=min(mn,temp);
+        }
+        return dp[k][n]=mn;
+    }
+    int superEggDrop(int k, int n) 
+    {
+       vector<vector<int>>dp(k+1,vector<int>(n+1,-1));
+        return solve(k,n,dp);
+    }
+};
+
+METHOD-2
+
+class Solution {
+public:
+    int solve(int k,int n,vector<vector<int>>&dp)
+    {
+        if(n==0 or n==1)
+            return n;
+        
+        if(k==1)
+            return n;
+        
+        if(dp[k][n]!=-1)
+            return dp[k][n];
+        
+        int mn=INT_MAX,low,high;
+        for(int i=1;i<=n;i++)
+        {
+           if(dp[k-1][i-1]!=-1)
+               low=dp[k-1][i-1];
+           else
+           {
+               low=solve(k-1,i-1,dp);
+               dp[k-1][i-1]=low;
+           }
+            
+            if(dp[k][n-i]!=-1)
+                high=dp[k][n-i];
+            else
+            {
+                high=solve(k,n-i,dp);
+                dp[k][n-i]=high;
+            }
+            
+            int temp=1+max(low,high);
+            mn=min(temp,mn);
+        }
+        return dp[k][n]=mn;
+    }
+    int superEggDrop(int k, int n) 
+    {
+        vector<vector<int>>dp(k+1,vector<int>(n+1,-1));
+        return solve(k,n,dp);
+    }
+};

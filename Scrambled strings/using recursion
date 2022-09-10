@@ -10,12 +10,12 @@ bool solve(string a,string b)
         bool f=false;
         for(int i=1;i<n;i++)
         {
-            if((solve(a.substr(0,i),b.substr(0,i),mp)==true) and (solve(a.substr(i,n-i),b.substr(i,n-i),mp)==true))
+            if((solve(a.substr(0,i),b.substr(0,i))==true) and (solve(a.substr(i,n-i),b.substr(i,n-i))==true))
             {
                 f=true;
                 break;
             }
-            if((solve(a.substr(0,i),b.substr(n-i,i),mp)==true) and (solve(a.substr(i,n-i),b.substr(0,n-i),mp)==true))
+            if((solve(a.substr(0,i),b.substr(n-i,i))==true) and (solve(a.substr(i,n-i),b.substr(0,n-i))==true))
             {
                f=true;
                break;
@@ -31,5 +31,5 @@ bool solve(string a,string b)
         if(s1.empty() and s2.empty())
             return true;
        
-        return solve(s1,s2,mp);
+        return solve(s1,s2);
     }
